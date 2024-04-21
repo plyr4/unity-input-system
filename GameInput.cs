@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
+using UnityEngine.InputSystem.Interactions;
 
 namespace Project.Input
 {
@@ -27,40 +27,38 @@ namespace Project.Input
                 return _instance;
             }
         }
+        public PlayerInput _playerInput;
 
-        [ReadOnlyInspector]
-        public bool _fire;
-        [ReadOnlyInspector]
         public bool _firePressed;
-        [ReadOnlyInspector]
         public bool _fireReleased;
-        [ReadOnlyInspector]
         public bool _fireAlt;
-        [ReadOnlyInspector]
         public bool _fireAltPressed;
-        [ReadOnlyInspector]
         public bool _fireAltReleased;
-        [ReadOnlyInspector]
         public bool _jump;
-        [ReadOnlyInspector]
         public bool _jumpPressed;
-        [ReadOnlyInspector]
         public bool _jumpReleased;
-        [ReadOnlyInspector]
         public Vector3 _horizontalMovement;
-        [ReadOnlyInspector]
         public Vector3 _verticalMovement;
-        [ReadOnlyInspector]
         public Vector3 _look;
-        [ReadOnlyInspector]
         public Vector3 _lookPosition;
-        [ReadOnlyInspector]
         public string _controlScheme;
 
-        private void Start()
+        private void Awake()
         {
             // initialize instance reference
             _ = Instance;
+
+            _playerInput = GetComponent<PlayerInput>();
+            _playerInput.onActionTriggered += OnHorizontalMove;
+            _playerInput.onActionTriggered += OnVerticalMove;
+            _playerInput.onActionTriggered += OnLook;
+            _playerInput.onActionTriggered += OnLookPosition;
+            _playerInput.onActionTriggered += OnFire;
+
+            // _playerInput.onActionTriggered += OnFireAlt;
+            // _playerInput.onActionTriggered += OnJump;
+
+            _playerInput.onControlsChanged += OnControlsChanged;
         }
 
         public void OnControlsChanged(PlayerInput playerInput)
@@ -70,51 +68,42 @@ namespace Project.Input
 
         public void OnHorizontalMove(InputAction.CallbackContext context)
         {
+            if (context.action.name != "HorizontalMove") return;
+
             _horizontalMovement = context.ReadValue<Vector2>();
         }
 
         public void OnVerticalMove(InputAction.CallbackContext context)
         {
+            if (context.action.name != "VerticalMove") return;
+
             _verticalMovement = context.ReadValue<Vector2>();
         }
 
         public void OnLook(InputAction.CallbackContext context)
         {
+            if (context.action.name != "Look") return;
+
             _look = context.ReadValue<Vector2>();
         }
 
         public void OnLookPosition(InputAction.CallbackContext context)
         {
+            if (context.action.name != "LookPosition") return;
+
             _lookPosition = context.ReadValue<Vector2>();
         }
 
         public void OnFire(InputAction.CallbackContext context)
         {
-            if (!ShouldReceiveInput()) return;
-            _fire = context.action.IsPressed();
-            _firePressed = context.action.WasPressedThisFrame();
+            if (context.action.name != "Fire") return;
+
+            _firePressed = true;
             _fireReleased = context.action.WasReleasedThisFrame();
-        }
-
-        public void OnFireAlt(InputAction.CallbackContext context)
-        {
-            if (!ShouldReceiveInput()) return;
-            _fireAlt = context.action.IsPressed();
-            _fireAltPressed = context.action.WasPressedThisFrame();
-            _fireAltReleased = context.action.WasReleasedThisFrame();
-        }
-        
-        public void OnJump(InputAction.CallbackContext context)
-        {
-            if (!ShouldReceiveInput()) return;
-            _jump = context.action.IsPressed();
-            _jumpPressed = context.action.WasPressedThisFrame();
-            _jumpReleased = context.action.WasReleasedThisFrame();
-        }
-
-        private bool ShouldReceiveInput()
-        {
-            return true;
+            if (_fireReleased)
+            {
+                _firePressed = false;
+            }
         }
     }
 }
