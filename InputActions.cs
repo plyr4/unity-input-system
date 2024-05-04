@@ -172,6 +172,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Key_Shift"",
+                    ""type"": ""Button"",
+                    ""id"": ""a547c16c-2325-40a1-8810-82b6028d2fd7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Key_Enter"",
                     ""type"": ""Button"",
                     ""id"": ""b2488d2a-ad8b-471f-8971-7208831f209d"",
@@ -978,6 +987,17 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eb9f51e2-00ae-4b5a-aac5-68642530b7cf"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Key_Shift"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1050,6 +1070,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Player_Button_South = m_Player.FindAction("Button_South", throwIfNotFound: true);
         m_Player_Button_East = m_Player.FindAction("Button_East", throwIfNotFound: true);
         m_Player_Key_Escape = m_Player.FindAction("Key_Escape", throwIfNotFound: true);
+        m_Player_Key_Shift = m_Player.FindAction("Key_Shift", throwIfNotFound: true);
         m_Player_Key_Enter = m_Player.FindAction("Key_Enter", throwIfNotFound: true);
         m_Player_Key_Backspace = m_Player.FindAction("Key_Backspace", throwIfNotFound: true);
         m_Player_Key_Spacebar = m_Player.FindAction("Key_Spacebar", throwIfNotFound: true);
@@ -1131,6 +1152,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Button_South;
     private readonly InputAction m_Player_Button_East;
     private readonly InputAction m_Player_Key_Escape;
+    private readonly InputAction m_Player_Key_Shift;
     private readonly InputAction m_Player_Key_Enter;
     private readonly InputAction m_Player_Key_Backspace;
     private readonly InputAction m_Player_Key_Spacebar;
@@ -1155,6 +1177,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         public InputAction @Button_South => m_Wrapper.m_Player_Button_South;
         public InputAction @Button_East => m_Wrapper.m_Player_Button_East;
         public InputAction @Key_Escape => m_Wrapper.m_Player_Key_Escape;
+        public InputAction @Key_Shift => m_Wrapper.m_Player_Key_Shift;
         public InputAction @Key_Enter => m_Wrapper.m_Player_Key_Enter;
         public InputAction @Key_Backspace => m_Wrapper.m_Player_Key_Backspace;
         public InputAction @Key_Spacebar => m_Wrapper.m_Player_Key_Spacebar;
@@ -1216,6 +1239,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Key_Escape.started += instance.OnKey_Escape;
             @Key_Escape.performed += instance.OnKey_Escape;
             @Key_Escape.canceled += instance.OnKey_Escape;
+            @Key_Shift.started += instance.OnKey_Shift;
+            @Key_Shift.performed += instance.OnKey_Shift;
+            @Key_Shift.canceled += instance.OnKey_Shift;
             @Key_Enter.started += instance.OnKey_Enter;
             @Key_Enter.performed += instance.OnKey_Enter;
             @Key_Enter.canceled += instance.OnKey_Enter;
@@ -1280,6 +1306,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Key_Escape.started -= instance.OnKey_Escape;
             @Key_Escape.performed -= instance.OnKey_Escape;
             @Key_Escape.canceled -= instance.OnKey_Escape;
+            @Key_Shift.started -= instance.OnKey_Shift;
+            @Key_Shift.performed -= instance.OnKey_Shift;
+            @Key_Shift.canceled -= instance.OnKey_Shift;
             @Key_Enter.started -= instance.OnKey_Enter;
             @Key_Enter.performed -= instance.OnKey_Enter;
             @Key_Enter.canceled -= instance.OnKey_Enter;
@@ -1363,6 +1392,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         void OnButton_South(InputAction.CallbackContext context);
         void OnButton_East(InputAction.CallbackContext context);
         void OnKey_Escape(InputAction.CallbackContext context);
+        void OnKey_Shift(InputAction.CallbackContext context);
         void OnKey_Enter(InputAction.CallbackContext context);
         void OnKey_Backspace(InputAction.CallbackContext context);
         void OnKey_Spacebar(InputAction.CallbackContext context);

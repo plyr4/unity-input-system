@@ -33,6 +33,9 @@ public class GameInput : MonoBehaviour
     public bool _fireAltPressed;
     public bool _fireAltHeld;
     public bool _fireAltReleased;
+    public bool _shiftPressed;
+    public bool _shiftHeld;
+    public bool _shiftReleased;
     public bool _jump;
     public bool _jumpPressed;
     public bool _jumpReleased;
@@ -54,6 +57,7 @@ public class GameInput : MonoBehaviour
         _playerInput.onActionTriggered += OnLookPosition;
         _playerInput.onActionTriggered += OnFire;
         _playerInput.onActionTriggered += OnFireAlt;
+        _playerInput.onActionTriggered += OnShift;
         // _playerInput.onActionTriggered += OnJump;
 
         _playerInput.onControlsChanged += OnControlsChanged;
@@ -81,6 +85,12 @@ public class GameInput : MonoBehaviour
         }
         _fireAltReleased = false;
         
+        _shiftPressed = false;
+        if (_shiftReleased)
+        {
+            _shiftHeld = false;
+        }
+        _shiftReleased = false;
     }
 
     public void OnControlsChanged(PlayerInput playerInput)
@@ -136,5 +146,16 @@ public class GameInput : MonoBehaviour
         _fireAltHeld = context.action.WasPressedThisFrame();
         
         _fireAltReleased = context.action.WasReleasedThisFrame();
+    }
+    
+    public void OnShift(InputAction.CallbackContext context)
+    {
+        if (context.action.name != "Key_Shift") return;
+
+        _shiftPressed = context.action.WasPressedThisFrame();
+        
+        _shiftHeld = context.action.WasPressedThisFrame();
+        
+        _shiftReleased = context.action.WasReleasedThisFrame();
     }
 }

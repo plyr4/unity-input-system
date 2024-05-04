@@ -150,6 +150,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Key_Shift",
+                    "type": "Button",
+                    "id": "a547c16c-2325-40a1-8810-82b6028d2fd7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Key_Enter",
                     "type": "Button",
                     "id": "b2488d2a-ad8b-471f-8971-7208831f209d",
@@ -954,6 +963,17 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "eb9f51e2-00ae-4b5a-aac5-68642530b7cf",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Key_Shift",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
