@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Interactions;
 
 public class GameInput : MonoBehaviour
 {
@@ -38,6 +37,7 @@ public class GameInput : MonoBehaviour
     public bool _shiftReleased;
     public bool _jump;
     public bool _jumpPressed;
+    public bool _jumpHeld;
     public bool _jumpReleased;
     public Vector3 _horizontalMovement;
     public Vector3 _verticalMovement;
@@ -58,7 +58,7 @@ public class GameInput : MonoBehaviour
         _playerInput.onActionTriggered += OnFire;
         _playerInput.onActionTriggered += OnFireAlt;
         _playerInput.onActionTriggered += OnShift;
-        // _playerInput.onActionTriggered += OnJump;
+        _playerInput.onActionTriggered += OnJump;
 
         _playerInput.onControlsChanged += OnControlsChanged;
         _controlScheme = _playerInput.currentControlScheme;
@@ -91,6 +91,13 @@ public class GameInput : MonoBehaviour
             _shiftHeld = false;
         }
         _shiftReleased = false;
+        
+        _jumpPressed = false;
+        if (_jumpReleased)
+        {
+            _jumpHeld = false;
+        }
+        _jumpReleased = false;
     }
 
     public void OnControlsChanged(PlayerInput playerInput)
@@ -157,5 +164,16 @@ public class GameInput : MonoBehaviour
         _shiftHeld = context.action.WasPressedThisFrame();
         
         _shiftReleased = context.action.WasReleasedThisFrame();
+    }
+    
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.action.name != "Jump") return;
+
+        _jumpPressed = context.action.WasPressedThisFrame();
+        
+        _jumpHeld = context.action.WasPressedThisFrame();
+        
+        _jumpReleased = context.action.WasReleasedThisFrame();
     }
 }
